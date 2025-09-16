@@ -40,8 +40,7 @@ public class Robot extends TimedRobot {
      m_frightMotor.setInverted(true);
 
      m_robotDrive = new DifferentialDrive(m_fleftMotor::set, m_frightMotor::set);
-    // // m_leftStick = new Joystick(0);
-    // // m_rightStick = new Joystick(1);
+    
      SendableRegistry.addChild(m_robotDrive, m_fleftMotor);
      SendableRegistry.addChild(m_robotDrive, m_frightMotor);
   }
