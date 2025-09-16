@@ -29,9 +29,7 @@ public class Robot extends TimedRobot {
    private final Spark m_frightMotor = new Spark(5);
    private final Spark m_bleftMotor = new Spark(4);
    private final Spark m_brightMotor = new Spark(6);
-  public boolean bbutton;
-  public boolean abutton;
-  public int toggle = 0;
+  
 
   public Robot() {
     // We need to invert one side of the drivetrain so that positive voltages
