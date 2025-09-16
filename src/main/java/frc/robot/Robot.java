@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 public class Robot extends TimedRobot {
   private final DifferentialDrive m_robotDrive;
   private final XboxController driveController = new XboxController(0);
-  //private final Spark spinny = new Spark(6);
   private final Solenoid launcher = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
    private final Spark m_fleftMotor = new Spark(3);
    private final Spark m_frightMotor = new Spark(5);
