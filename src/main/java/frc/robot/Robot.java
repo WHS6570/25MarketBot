@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
   private final DifferentialDrive m_robotDrive;
   private final XboxController driveController = new XboxController(0);
   private final Solenoid launcher = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
+  private final Solenoid reloader = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
    private final Spark m_fleftMotor = new Spark(3);
    private final Spark m_frightMotor = new Spark(5);
    private final Spark m_bleftMotor = new Spark(4);
@@ -55,11 +56,16 @@ public class Robot extends TimedRobot {
        ((-driveController.getLeftY() * Math.abs(-driveController.getLeftY())) * (1-(-driveController.getRightTriggerAxis()*0.8))), 
        ((-driveController.getRightX() * Math.abs(-driveController.getRightX())) * (1-(-driveController.getRightTriggerAxis()*0.8)))
      );
-    if (driveController.getAButtonPressed()){
+    if (driveController.getRightBumperButtonPressed()){
      launcher.set(true);
     } else {
       launcher.set(false);
     }
+    if (driveController.getLeftBumperButtonPressed()){
+      reloader.set(true);
+     } else {
+       reloader.set(false);
+     }
     
     //ABOVE HERE<---------------------------------------------
     if (driveController.getAButtonPressed()){
