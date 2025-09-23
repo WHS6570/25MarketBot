@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,6 +30,7 @@ public class Robot extends TimedRobot {
    private final Spark m_frightMotor = new Spark(5);
    private final Spark m_bleftMotor = new Spark(4);
    private final Spark m_brightMotor = new Spark(6);
+   private final TalonFX aimmotor = new TalonFX(32);
   
 
   public Robot() {
@@ -59,6 +62,13 @@ public class Robot extends TimedRobot {
     }
     
     //ABOVE HERE<---------------------------------------------
+    if (driveController.getAButtonPressed()){
+      aimmotor.set(-1);
+     } else if (driveController.getYButtonPressed()) {
+      aimmotor.set(1);
+     } else {
+       aimmotor.set(0);
+     }
 }
 
 
