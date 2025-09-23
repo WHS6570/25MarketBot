@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -32,7 +33,7 @@ public class Robot extends TimedRobot {
    private final Spark m_bleftMotor = new Spark(4);
    private final Spark m_brightMotor = new Spark(6);
    private final TalonFX aimmotor = new TalonFX(32);
-  
+  double timestart = 0;
 
   public Robot() {
     // We need to invert one side of the drivetrain so that positive voltages
@@ -61,10 +62,15 @@ public class Robot extends TimedRobot {
     } else {
       launcher.set(false);
     }
-    if (driveController.getLeftBumperButtonPressed()){
+     if (driveController.getXButtonPressed()){
+      timestart = Timer.getFPGATimestamp();
+     }
+     if ((Timer.getFPGATimestamp() - timestart) < 3){
       reloader.set(true);
+     } else if (driveController.getLeftBumperButtonPressed()){
+       reloader.set(true);
      } else {
-       reloader.set(false);
+      reloader.set(false);
      }
     
     //ABOVE HERE<---------------------------------------------
