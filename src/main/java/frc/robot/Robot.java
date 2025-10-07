@@ -24,16 +24,17 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
  * the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
-  private final DifferentialDrive m_robotDrive;
+  // private final DifferentialDrive m_robotDrive;
   private final XboxController driveController = new XboxController(0);
   private final Solenoid launcher = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
   private final Solenoid reloader = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
-   private final Spark m_fleftMotor = new Spark(3);
-   private final Spark m_frightMotor = new Spark(5);
-   private final Spark m_bleftMotor = new Spark(4);
-   private final Spark m_brightMotor = new Spark(6);
+   private final Spark m_fleftMotor = new Spark(0);
+   private final Spark m_frightMotor = new Spark(2);
+   private final Spark m_bleftMotor = new Spark(1);
+   private final Spark m_brightMotor = new Spark(9);
    private final TalonFX aimmotor = new TalonFX(32);
   double timestart = 0;
+  private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_fleftMotor::set, m_frightMotor::set);
 
   public Robot() {
     // We need to invert one side of the drivetrain so that positive voltages
@@ -43,7 +44,7 @@ public class Robot extends TimedRobot {
      m_frightMotor.addFollower(m_brightMotor);
      m_frightMotor.setInverted(true);
 
-     m_robotDrive = new DifferentialDrive(m_fleftMotor::set, m_frightMotor::set);
+    //  m_robotDrive = new DifferentialDrive(m_fleftMotor::set, m_frightMotor::set);
     
      SendableRegistry.addChild(m_robotDrive, m_fleftMotor);
      SendableRegistry.addChild(m_robotDrive, m_frightMotor);
@@ -53,31 +54,33 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //BELOW HERE<---------------------------------------------
 
-     m_robotDrive.arcadeDrive(
-       ((-driveController.getLeftY() * Math.abs(-driveController.getLeftY())) * (1-(-driveController.getRightTriggerAxis()*0.8))), 
+      m_robotDrive.arcadeDrive(
+        ((-driveController.getLeftY() * Math.abs(-driveController.getLeftY())) * (1-(-driveController.getRightTriggerAxis()*0.8))), 
        ((-driveController.getRightX() * Math.abs(-driveController.getRightX())) * (1-(-driveController.getRightTriggerAxis()*0.8)))
-     );
+    );
+    
+    
     if (driveController.getRightBumperButtonPressed()){
      launcher.set(true);
     } else {
       launcher.set(false);
     }
-     if (driveController.getXButtonPressed()){
-      timestart = Timer.getFPGATimestamp();
-     }
-     if ((Timer.getFPGATimestamp() - timestart) < 3){
-      reloader.set(true);
-     } else if (driveController.getLeftBumperButtonPressed()){
-       reloader.set(true);
-     } else {
-      reloader.set(false);
-     }
+    //  if (driveController.getXButtonPressed()){
+    //   timestart = Timer.getFPGATimestamp();
+    //  }
+    //  if ((Timer.getFPGATimestamp() - timestart) < 3){
+    //   reloader.set(true);
+    //  } else if (driveController.getLeftBumperButtonPressed()){
+    //    reloader.set(true);
+    //  } else {
+    //   reloader.set(false);
+    //  }
     
     //ABOVE HERE<---------------------------------------------
-    if (driveController.getAButtonPressed()){
-      aimmotor.set(-1);
-     } else if (driveController.getYButtonPressed()) {
+    if (driveController.getAButton()){
       aimmotor.set(1);
+     } else if (driveController.getYButton()) {
+      aimmotor.set(-1);
      } else {
        aimmotor.set(0);
      }
