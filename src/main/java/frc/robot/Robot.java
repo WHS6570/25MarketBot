@@ -60,12 +60,16 @@ public class Robot extends TimedRobot {
        ((-driveController.getRightX() * Math.abs(-driveController.getRightX())) * (1-(-driveController.getRightTriggerAxis()*0.8)))
     );
     
-    
+    aimmotor.set(0);
+
+    // calls function when right bumper pressed
     if (driveController.getRightBumperButtonPressed()){
-     launcher.set(true);
+    shootyThingy(true);
     } else {
-      launcher.set(false);
+     shootyThingy(false); 
     }
+
+
     //  if (driveController.getXButtonPressed()){
     //   timestart = Timer.getFPGATimestamp();
     //  }
@@ -79,13 +83,27 @@ public class Robot extends TimedRobot {
     
     //ABOVE HERE<---------------------------------------------
     if (driveController.getAButton()){
-      aimmotor.set(1);
-     } else if (driveController.getYButton()) {
-      aimmotor.set(-1);
-     } else {
-       aimmotor.set(0);
-     }
+      aimUppie();
+     } else if (driveController.getYButton()) 
+      aimDownie();
+     } 
+
+    //function sets the launcher solenoid to true or false and reports the current status to the dashboard
+public void shootyThingy(boolean toggle) {
+    launcher.set(toggle);
+    SmartDashboard.putBoolean("launcher shooted ", toggle);
 }
 
+// aims launcher up
+public void aimUppie() {
+  aimmotor.set(1);
+ // SmartDashboard.putBoolean("arm up", );
+}
+
+// aims launcher down
+public void aimDownie() {
+  aimmotor.set(-1);
+ // SmartDashboard.putBoolean("arm down", );
+}
 
 }   
